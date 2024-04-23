@@ -44,4 +44,23 @@ GROUP BY ho_ten
 ORDER BY COUNT(a.film_id)  desc
 --C6:
 
---C7
+--C7:
+SELECT a.city,
+sum(d.amount)
+FROM city AS a
+JOIN address AS b ON a.city_id=b.city_id
+JOIN customer AS c ON b.address_id=c.address_id
+JOIN payment AS d ON c.customer_id=d.customer_id
+group by a.city
+order by sum(d.amount) desc
+--C8:
+SELECT 
+concat(a.city,', ',e.country),
+sum(d.amount)
+FROM city AS a
+JOIN address AS b ON a.city_id=b.city_id
+JOIN customer AS c ON b.address_id=c.address_id
+JOIN payment AS d ON c.customer_id=d.customer_id
+JOIN country AS e ON a.country_id=e.country_id
+group by concat(a.city,', ',e.country)
+order by sum(d.amount) 
