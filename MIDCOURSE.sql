@@ -43,7 +43,10 @@ JOIN public.actor AS c ON b.actor_id=c.actor_id
 GROUP BY ho_ten
 ORDER BY COUNT(a.film_id)  desc
 --C6:
-
+select count(*)
+from address as a
+left join customer as b on a.address_id=b.address_id
+where b.address_id is null
 --C7:
 SELECT a.city,
 sum(d.amount)
