@@ -96,7 +96,21 @@ ADD COLUMN YEAR_ID TEXT
 UPDATE sales_dataset_rfm_prj 
 SET YEAR_ID = EXTRACT(YEAR FROM orderdate);
 
+5.
+with min_max as
+(select 
+Q1-1.5*IQR as min_value
+Q3+1.5*IQR as max_value
+from (select 
+percentile_cont(0.25) within group (order by quantityordered) as Q1,
+percentile_cont(0.75) within group (order by quantityordered) as Q3,
+percentile_cont(0.75) within group (order by quantityordered) - percentile_cont(0.25) within group (order by quantityordered) as IQR,
+percentile_cont(0.25) within group (order by quantityordered) 
+from sales_dataset_rfm_prj) as a)
 
+select * from sales_dataset_rfm_prj
+where quantityordered<(select min_value from min_max)
+or quantityordered<(select max_value from min_max)
 
 
 
