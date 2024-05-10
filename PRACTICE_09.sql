@@ -21,22 +21,22 @@ ALTER TABLE sales_dataset_rfm_prj
 ALTER COLUMN productcode TYPE varchar
 
 ALTER TABLE sales_dataset_rfm_prj 
-ALTER COLUMN status TYPE text 
+ALTER COLUMN status TYPE varchar 
   
 ALTER TABLE sales_dataset_rfm_prj 
-ALTER COLUMN productline TYPE text 
+ALTER COLUMN productline TYPE varchar 
 
 ALTER TABLE sales_dataset_rfm_prj 
-ALTER COLUMN customername TYPE text 
+ALTER COLUMN customername TYPE varchar 
 
 ALTER TABLE sales_dataset_rfm_prj 
-ALTER COLUMN addressline1 TYPE text
+ALTER COLUMN addressline1 TYPE varchar
 
 ALTER TABLE sales_dataset_rfm_prj 
-ALTER COLUMN city TYPE text
+ALTER COLUMN city TYPE varchar
 
 ALTER TABLE sales_dataset_rfm_prj 
-ALTER COLUMN state TYPE text
+ALTER COLUMN state TYPE varchar
 
 ALTER TABLE sales_dataset_rfm_prj 
 ALTER COLUMN country TYPE text
@@ -78,13 +78,7 @@ SET contactlastname=SUBSTRING(contactfullname FROM (POSITION ('-' IN contactfull
 ALTER TABLE sales_dataset_rfm_prj 
 ADD COLUMN QTR_ID TEXT
 UPDATE sales_dataset_rfm_prj 
-SET QTR_ID = 
-CASE
-   WHEN EXTRACT(MONTH FROM orderdate) IN (1,2,3) THEN 'I'
-   WHEN EXTRACT(MONTH FROM orderdate) IN (4,5,6) THEN 'II'
-   WHEN EXTRACT(MONTH FROM orderdate) IN (7,8,9) THEN 'III'
-   ELSE 'IV'
-END;
+SET QTR_ID = EXTRACT(QUARTER FROM orderdate);
 
 ALTER TABLE sales_dataset_rfm_prj 
 ADD COLUMN MONTH_ID TEXT
